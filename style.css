@@ -23,6 +23,21 @@ body {
     line-height: 1.6;
 }
 
+.titulos {
+    text-align: center;
+    padding: 15px 0px;
+    color: var(--cor-secundaria);
+}
+
+.botoes {
+    color: black;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: background-color 0.4s;
+}
 /* 
     2. TOPO (Header/Navbar)
 */
@@ -32,16 +47,29 @@ body {
     align-items: center;
     padding: 10px 16px;
     background-color: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Sombra leve */
-    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    flex-wrap: wrap; /*Permite que o menu vá para a linha de baixo dentro do próprio topo */
+}
+
+.topo h1 {
+    font-size: 18px;
+    margin: auto;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    color: var(--cor-primaria);
 }
 
 .logo img {
-    width: 150px;  /* Largura contida */
+    width: 50px;  /* Largura contida */
     height: auto; /* Altura contida para garantir o formato quadrado */
     object-fit: cover; /* Impede que a imagem fique esticada/deformada */
     border-radius: 5px; /* Dá uma leve arredondada nas bordas para ficar mais moderno */
     display: block;
+    margin-right: 10px;
+    margin-left: 0;
 }
 
 .menu-hamburguer {
@@ -68,11 +96,9 @@ body {
 
 .nav-menu-hamburguer {
     display: none;
-    position: absolute;
-    top: 100%; /* Surge logo abaixo da barra superior */
-    left: 0;
-    width: 100%;
+    width: 100%; /* Força o menu a ocupar a 2ª linha inteira */
     background-color: white;
+    margin-top: 10px; /* Dá um espacinho entre a logo/botão e os links */
 }
 
 /* Quando o menu ganha a classe 'ativo', ele volta a aparecer! */
@@ -92,17 +118,7 @@ body {
     border-bottom: none; /* isso remove a última borda inferior */
 }
 
-.botoes {
-    color: black;
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: background-color 0.3s;
-}
-
-.botao-contato-topo {
+/* .botao-contato-topo {
     background-color: var(--cor-secundaria);
     color: white;
     text-decoration: none;
@@ -111,15 +127,15 @@ body {
     font-weight: 600;
     font-size: 0.9rem;
     transition: background-color 0.3s;
-}
+} */
 
-.botao-contato-topo:hover {
-    background-color: #049e62; /* Escurece um pouco ao passar o mouse */
-}
+/* .botao-contato-topo:hover {
+    background-color: #049e62;
+}*/
 
 /* 
     3. HERO SECTION (Seção Principal) - Mobile First
-    Aqui o foco é empilhar os elementos para telas de celular.
+    O foco é empilhar os elementos para telas de celular.
 */
 .hero {
     /* Usamos Flexbox para centralizar o conteúdo facilmente */
@@ -173,12 +189,6 @@ body {
     text-align: justify;
 }
 
-.sobre h1 {
-    text-align: center;
-    padding: 15px 0px;
-    color: var(--cor-primaria);
-}
-
 .botao-principal {
     display: flex;
     align-items: center;
@@ -194,7 +204,11 @@ body {
     width: 100%; /* No celular, o botão ocupa a largura toda (menos o padding) */
     max-width: 350px;
     box-shadow: 0 4px 15px rgba(5, 191, 119, 0.4); /* Brilho verde */
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.botao-principal:hover {
+    background-color: #05a769;
 }
 
 .botao-principal:active {
@@ -231,7 +245,22 @@ body {
     4. MEDIA QUERIES (Ajustes para PC/Tablet)
     Quando a tela tiver pelo menos 768px de largura, essas regras entram em ação.
 */
-@media (min-width: 768px) {
+@media (min-width: 768px) {    
+    .topo h1 {
+        font-size: 22px;
+        margin: auto;
+    }
+    
+   .logo img {
+        width: 55px;  /* Largura contida */
+        height: auto; /* Altura contida para garantir o formato quadrado */
+        object-fit: cover; /* Impede que a imagem fique esticada/deformada */
+        border-radius: 5px; /* Dá uma leve arredondada nas bordas para ficar mais moderno */
+        display: block;
+        margin-right: 10px;
+        margin-left: 0;
+    }
+
     .hero {
         padding: 100px 40px; /* Mais espaço no topo/fundo em telas grandes */
     }
@@ -260,9 +289,29 @@ body {
 
     .menu-hamburguer {
         display: none; /* A propriedade 'none' esconde o elemento completamente */
-  }
+    }
 
-    .sobre p {
+    .nav-menu-hamburguer {
+        display: flex;
+        position: static;
+        width: auto;
+        gap: 10px;
+        margin-top: 0;
+    }
+
+    .nav-menu-hamburguer a {
+        background-color: var(--cor-primaria);
+        color: white;
+        border-bottom: none;
+        border-radius: 8px;             
+    }
+
+    .nav-menu-hamburguer a:hover {
+        background-color: #063547;
+        color: white;
+    }
+
+    .sobre p {  
 
         text-align: justify;
         width: 40%;
