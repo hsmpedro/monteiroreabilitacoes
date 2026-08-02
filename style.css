@@ -21,7 +21,7 @@ body {
 
 .titulos {
     text-align: center;
-    padding: 15px 0px;
+    margin-bottom: 15px;
     color: var(--cor-secundaria);
 }
 
@@ -180,8 +180,16 @@ body {
     opacity: 0.9;
 }
 
+.sessao-principal2 {
+    padding: 0 30px;
+}
+
 .sobre {
-    padding: 50px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.sobre p {
     text-align: justify;
 }
 
@@ -235,6 +243,30 @@ body {
     content: "✓ "; /* Ícone de check de texto simples */
     color: var(--cor-secundaria);
     font-weight: bold;
+}
+
+.unidades {
+    max-width: 1400px; /* Aumenta o limite de largura para telas Full HD */
+}
+
+.unidades h2 {
+    color: var(--cor-primaria);
+    padding: 0 50px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.unidades img {
+    width: 100%;
+    height: auto;
+}
+
+.unidades-img {
+    display: flex;
+    justify-content: center; /* Centraliza as imagens na horizontal */
+    gap: 10px;               /* Espaço entre cada imagem */
+    flex-wrap: wrap;         /* Quebra linha no celular se não couberem todas */
+    margin-bottom: 50px;
 }
 
 /* 
@@ -307,10 +339,28 @@ body {
         color: white;
     }
 
-    .sobre p {  
+    .sessao-principal2 {
+        padding: 0 20%;
+    }
 
+    .sobre p {  
+        padding: 0 100px;
         text-align: justify;
-        width: 40%;
         margin: 0 auto;
+    }
+
+    .unidades img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover; /* impede que a imagem achate ou estique */
+        object-position: center; /* garante que o corte fique centralizado na foto */
+    }
+
+    .unidades-img {
+        display: grid;
+        /* Cria quantas colunas couberem, cada uma com no mínimo 250px e no máximo 1fr */
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 10px;
+        width: 100%;
     }
 }
