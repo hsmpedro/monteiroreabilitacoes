@@ -29,11 +29,24 @@ body {
     color: black;
     text-decoration: none;
     padding: 8px 12px;
-    border-radius: 4px;
+    border-radius: 8px;
     font-weight: 600;
     font-size: 0.9rem;
     transition: background-color 0.4s;
 }
+
+.botoes-contato {
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    background-color: var(--cor-secundaria);
+    padding: 14px;
+    border-radius: 8px;
+    gap: 6px;
+}
+
 /* 
     2. TOPO (Header/Navbar)
 */
@@ -197,7 +210,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px; /* Espaço entre o ícone e o texto */
+    gap: 6px; /* Espaço entre o ícone e o texto */
     background-color: var(--cor-secundaria);
     color: white;
     text-decoration: none;
@@ -246,13 +259,14 @@ body {
 }
 
 .unidades {
-    max-width: 1400px; /* Aumenta o limite de largura para telas Full HD */
+    text-align: center;
 }
 
 .unidades h2 {
     color: var(--cor-primaria);
     padding: 0 50px;
     text-align: center;
+    margin-top: 50px;
     margin-bottom: 5px;
 }
 
@@ -266,7 +280,25 @@ body {
     justify-content: center; /* Centraliza as imagens na horizontal */
     gap: 10px;               /* Espaço entre cada imagem */
     flex-wrap: wrap;         /* Quebra linha no celular se não couberem todas */
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: var(--cor-primaria);
+    padding: 40px;
+    margin-top: 100px;
+    /* border-top: 1px solid #e0e0e0; */
+}
+
+footer p {
+    font-size: 13px;
+    color: white;
+    text-align: center;
+}
+
+footer a {
+    text-decoration: none;
+    color: #00bfff;
 }
 
 /* 
@@ -287,6 +319,12 @@ body {
         display: block;
         margin-right: 10px;
         margin-left: 0;
+    }
+
+    .botoes {
+        background-color: var(--cor-primaria);
+        color: white;
+        border-radius: 8px;
     }
 
     .hero {
@@ -328,10 +366,7 @@ body {
     }
 
     .nav-menu-hamburguer a {
-        background-color: var(--cor-primaria);
-        color: white;
-        border-bottom: none;
-        border-radius: 8px;             
+        border-bottom: none;         
     }
 
     .nav-menu-hamburguer a:hover {
