@@ -111,3 +111,39 @@ if ('IntersectionObserver' in window) {
 } else {
     alvos.forEach((alvo) => alvo.classList.add('visivel'));
 }
+
+/* PARA LEVAR O USUÁRIO ATÉ O LOCAL DA PÁGINA, DEPENDENDO DE QUAL BOTÃO ELE CLICAR
+    POR EXEMPLO: QUNADO ELE CLICAR NO BOTÃO "SOBRE NÓS", ELE SERÁ DIRECIONADO PARA
+    O LOCAL DA PÁGINA QUE TEM O SOBRE NÒS
+Busca os botões (a[href^="#"]): Ele varre o seu HTML e seleciona todos os links/botões cujo endereço (href) começa com a hashtag # (por exemplo: href="#unidades", href="#sobre", href="#contato").
+
+Busca o destino (document.querySelector(targetId)): No momento em que alguém clica em um desses botões, o código lê o valor do href e procura na página qual elemento possui exatamente aquele id correspondente (ex: <section id="unidades">).
+*/
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        
+        // Se for apenas "#", ignora
+        if (targetId === '#' || targetId === '') return;
+        
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            e.preventDefault(); // Impede o pulo seco padrão do navegador
+            
+            // 1. Pega a altura EXATA do cabeçalho no momento do clique
+            const header = document.querySelector('.topo');
+            const headerHeight = header ? header.offsetHeight : 0;
+            
+            // 2. Calcula a posição do elemento na página descartando o cabeçalho
+            const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - headerHeight;
+
+            // 3. Rola suavemente até o ponto exato
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
