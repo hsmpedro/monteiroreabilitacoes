@@ -24,9 +24,42 @@ if (menuHamburguer && navMenuHamburguer) {
     });
 }
 
+// Galeria: mostra poucas fotos e revela o restante na mesma tela
+document.querySelectorAll('.unidades-img').forEach((galeria) => {
+    const fotos = Array.from(galeria.querySelectorAll('img'));
+    const limite = Number(galeria.dataset.visiveis || 4);
+
+    fotos.forEach((img) => {
+        const moldura = document.createElement('div');
+        moldura.className = 'foto';
+        img.parentNode.insertBefore(moldura, img);
+        moldura.appendChild(img);
+    });
+
+    if (fotos.length <= limite) return;
+
+    const molduras = Array.from(galeria.querySelectorAll('.foto'));
+    const restantes = molduras.length - limite;
+    molduras.slice(limite).forEach((m) => m.classList.add('oculta'));
+
+    const botao = document.createElement('button');
+    botao.type = 'button';
+    botao.className = 'galeria-mais';
+    botao.innerHTML = '+' + restantes + '<small>ver mais fotos</small>';
+    molduras[limite - 1].appendChild(botao);
+
+    botao.addEventListener('click', () => {
+        molduras.forEach((m) => m.classList.remove('oculta'));
+        botao.remove();
+    });
+});
+
 // Marca as fotos que ainda não foram enviadas para exibir um espaço reservado bonito
 document.querySelectorAll('.unidades-img img').forEach((img) => {
-    const marcar = () => img.classList.add('sem-imagem');
+    const marcar = () => {
+        img.classList.add('sem-imagem');
+        img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+    };
     if (img.complete && img.naturalWidth === 0) marcar();
     img.addEventListener('error', marcar);
 });
