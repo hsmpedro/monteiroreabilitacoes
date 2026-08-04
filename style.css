@@ -509,6 +509,7 @@ img {
    RODAPÉ
    ========================================================== */
 .rodape {
+    text-align: center;
     margin-top: 40px;
     background: linear-gradient(160deg, var(--cor-primaria) 0%, var(--cor-primaria-escura) 100%);
     color: rgba(244, 248, 251, 0.86);
@@ -554,7 +555,7 @@ img {
     border-top: 1px solid rgba(255, 255, 255, 0.14);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     gap: 8px;
     font-size: 0.85rem;
 }
