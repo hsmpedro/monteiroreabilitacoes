@@ -121,7 +121,7 @@ img {
 }
 
 .topo-conteudo {
-    max-width: var(--largura);
+    max-width: 100%;
     margin: 0 auto;
     padding: 12px 20px;
     display: flex;
@@ -759,5 +759,97 @@ img {
 @media (max-width: 700px) {
     .unidades-img {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==========================================================
+   ABAS DE ESTADOS E ANIMAÇÕES DA GALERIA
+   ========================================================== */
+.unidades-abas {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: var(--largura);
+    margin: 0 auto 34px;
+    padding: 0 16px;
+}
+
+.unidades-abas .aba {
+    border: 1px solid var(--cor-borda);
+    background-color: var(--cor-superficie);
+    color: var(--cor-primaria);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 11px 20px;
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color var(--transicao), color var(--transicao),
+        border-color var(--transicao), transform var(--transicao), box-shadow var(--transicao);
+}
+
+.unidades-abas .aba:hover {
+    border-color: var(--cor-primaria-clara);
+    transform: translateY(-2px);
+}
+
+.unidades-abas .aba.ativa {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+    color: #ffffff;
+    box-shadow: var(--sombra-suave);
+}
+
+.unidades-vazio {
+    text-align: center;
+    color: var(--cor-texto-suave);
+    margin-bottom: 30px;
+}
+
+.unidade-cartao[hidden] {
+    display: none;
+}
+
+.unidade-cartao.entrando {
+    animation: cartaoEntra 0.35s ease both;
+}
+
+@keyframes cartaoEntra {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.unidades-img .foto.revelando {
+    animation: fotoRevela 0.42s ease both;
+}
+
+@keyframes fotoRevela {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.galeria-mais.saindo {
+    opacity: 0;
+    transform: scale(0.94);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+}
+
+@media (max-width: 640px) {
+    .unidades-abas {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        scrollbar-width: none;
+    }
+    .unidades-abas::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .unidade-cartao.entrando,
+    .unidades-img .foto.revelando {
+        animation: none;
     }
 }

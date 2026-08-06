@@ -49,8 +49,18 @@ document.querySelectorAll('.unidades-img').forEach((galeria) => {
     molduras[limite - 1].appendChild(botao);
 
     botao.addEventListener('click', () => {
-        molduras.forEach((m) => m.classList.remove('oculta'));
-        botao.remove();
+        botao.classList.add('saindo');
+        const escondidas = molduras.slice(limite);
+        escondidas.forEach((m, i) => {
+            m.classList.remove('oculta');
+            m.classList.add('revelando');
+            m.style.animationDelay = (i % 8) * 60 + 'ms';
+            m.addEventListener('animationend', () => {
+                m.classList.remove('revelando');
+                m.style.animationDelay = '';
+            }, { once: true });
+        });
+        setTimeout(() => botao.remove(), 220);
     });
 });
 
@@ -146,4 +156,69 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
+});
+// ==========================================================
+// ABAS POR ESTADO
+// ==========================================================
+const abas = document.querySelectorAll('.unidades-abas .aba');
+const cartoes = document.querySelectorAll('.unidade-cartao');
+const avisoVazio = document.querySelector('.unidades-vazio');
+
+function mostrarEstado(uf) {
+    let visiveis = 0;
+    cartoes.forEach((cartao) => {
+        const combina = cartao.dataset.estado === uf;
+        cartao.hidden = !combina;
+        if (combina) {
+            visiveis++;
+            cartao.classList.remove('entrando');
+            void cartao.offsetWidth;
+            cartao.classList.add('entrando');
+        }
+    });
+    abas.forEach((aba) => {
+        const ativa = aba.dataset.aba === uf;
+        aba.classList.toggle('ativa', ativa);
+        aba.setAttribute('aria-selected', String(ativa));
+    });
+    if (avisoVazio) avisoVazio.hidden = visiveis > 0;
+}
+
+if (abas.length && cartoes.length) {
+    abas.forEach((aba) => {
+        aba.addEventListener('click', () => mostrarEstado(aba.dataset.aba));
+    });
+    mostrarEstado('SC');
+}
+
+// ==========================================================
+// ROLAGEM SUAVE ATÉ AS SEÇÕES (descontando o topo fixo)
+// ==========================================================
+const topoFixo = document.querySelector('.topo');
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (evento) => {
+        const alvo = document.querySelector(link.getAttribute('href'));
+        if (!alvo) return;
+        evento.preventDefault();
+        const altura = topoFixo ? topoFixo.offsetHeight : 0;
+        const topo = alvo.getBoundingClientRect().top + window.pageYOffset - altura - 12;
+        window.scrollTo({ top: topo, behavior: 'smooth' });
+    });
+});
+
+// ==========================================================
+// WHATSAPP COM MENSAGEM PRONTA POR UNIDADE
+// ==========================================================
+const numeroCentral = '47991440936';
+
+cartoes.forEach((cartao) => {
+    const nome = (cartao.querySelector('.unidade-topo h3')?.textContent || '').trim();
+    const estado = (cartao.querySelector('.unidade-local')?.textContent || '').trim();
+    const botaoContato = cartao.querySelector('.botoes-contato');
+    if (!botaoContato || !nome) return;
+
+    const mensagem = 'Olá, gostaria de mais informações sobre a ' + nome +
+        (estado ? ' - ' + estado : '');
+    botaoContato.href = 'https://wa.me/' + numeroCentral + '?text=' + encodeURIComponent(mensagem);
 });
