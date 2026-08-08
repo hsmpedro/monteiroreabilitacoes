@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plano Terapêutico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#152F29;
+    --bg-deep2:#0F241F;
+    --paper:#EFEEE1;
+    --paper2:#E7E5D4;
+    --ink:#1C2420;
+    --ink-soft:#4B564E;
+    --gold:#B98A3D;
+    --gold-soft:#D7B372;
+    --sage:#7C9A82;
+    --sage-light:#C9D6C4;
+    --cream-on-dark:#EFE9D8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold-soft); color:var(--ink);}
+
+  .page{max-width:920px; margin:0 auto; position:relative;}
+
+  /* ---------- root/vine spine ---------- */
+  .spine{
+    position:absolute; left:38px; top:0; bottom:0; width:2px;
+    z-index:0;
+  }
+  .spine svg{position:sticky; top:0;}
+  @media(max-width:720px){ .spine{left:20px;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:radial-gradient(120% 140% at 15% -10%, #1C4438 0%, var(--bg-deep) 45%, var(--bg-deep2) 100%);
+    color:var(--cream-on-dark);
+    padding:88px 64px 96px 96px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; right:-120px; top:-120px; width:420px; height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(185,138,61,0.18) 0%, rgba(185,138,61,0) 70%);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--gold-soft);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:26px;
+  }
+  .eyebrow::before{content:""; width:26px; height:1px; background:var(--gold-soft);}
+  h1.title{
+    font-family:'Fraunces', serif;
+    font-weight:450;
+    font-size:clamp(48px,7vw,84px);
+    line-height:0.98;
+    letter-spacing:-0.01em;
+    max-width:680px;
+  }
+  h1.title em{font-style:italic; font-weight:300; color:var(--sage-light);}
+  .hero-sub{
+    margin-top:26px; max-width:520px;
+    font-size:16.5px; color:#CFCABB; font-weight:400;
+  }
+  .hero-tags{
+    margin-top:44px; display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:.03em;
+    border:1px solid rgba(239,233,216,0.28);
+    color:var(--cream-on-dark);
+    padding:7px 14px; border-radius:100px;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{
+    position:relative;
+    padding:64px 64px 64px 96px;
+  }
+  section.on-paper{background:var(--paper);}
+  section.on-paper2{background:var(--paper2);}
+  @media(max-width:720px){
+    section{padding:52px 24px 52px 60px;}
+    .hero{padding:72px 24px 72px 60px;}
+  }
+
+  .node{
+    position:absolute; left:32px; top:70px; width:14px; height:14px;
+    border-radius:50%; background:var(--paper);
+    border:2px solid var(--gold);
+    z-index:2;
+  }
+  @media(max-width:720px){ .node{left:14px;} }
+
+  .sec-head{display:flex; align-items:baseline; gap:16px; margin-bottom:28px;}
+  .sec-num{
+    font-family:'IBM Plex Mono', monospace; color:var(--gold); font-size:13px;
+  }
+  h2{
+    font-family:'Fraunces', serif; font-weight:450; font-size:clamp(26px,3.4vw,34px);
+    letter-spacing:-0.01em;
+  }
+  .lede{
+    max-width:640px; color:var(--ink-soft); font-size:16px; margin-bottom:30px;
+  }
+
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .grid-3{display:grid; grid-template-columns:repeat(3,1fr); gap:22px;}
+  @media(max-width:720px){ .grid-2, .grid-3{grid-template-columns:1fr;} }
+
+  .card{
+    background:rgba(255,255,255,0.5);
+    border:1px solid rgba(28,36,32,0.09);
+    border-radius:4px;
+    padding:22px 24px;
+  }
+  .card h3{
+    font-family:'Fraunces', serif; font-weight:600; font-size:16.5px; margin-bottom:8px;
+  }
+  .card p{font-size:14.5px; color:var(--ink-soft);}
+
+  .pill-list{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px;}
+  .pill{
+    font-size:13px; padding:8px 14px; background:var(--sage-light);
+    color:#26372B; border-radius:3px; font-weight:500;
+  }
+
+  /* dark strip for methodology */
+  .dark-strip{
+    background:var(--bg-deep); color:var(--cream-on-dark);
+  }
+  .dark-strip .lede{color:#C6C1AE;}
+  .dark-strip .card{
+    background:rgba(239,233,216,0.05);
+    border:1px solid rgba(239,233,216,0.14);
+  }
+  .dark-strip .card h3{color:var(--gold-soft);}
+  .dark-strip .card p{color:#C6C1AE;}
+  .dark-strip .sec-num{color:var(--sage-light);}
+
+  .routine-row{
+    display:flex; align-items:flex-start; gap:18px; padding:14px 0;
+    border-bottom:1px solid rgba(28,36,32,0.1);
+  }
+  .routine-row:last-child{border-bottom:none;}
+  .routine-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--gold);
+    min-width:150px; padding-top:2px;
+  }
+  .routine-row p{font-size:14.5px; color:var(--ink-soft); max-width:520px;}
+
+  blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-weight:450;
+    font-size:22px; line-height:1.5; color:var(--ink);
+    max-width:560px; margin-top:6px;
+    border-left:2px solid var(--gold); padding-left:22px;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{position:relative; margin-top:36px;}
+  .t-item{
+    display:grid; grid-template-columns:120px 1fr; gap:20px;
+    padding:20px 0; border-top:1px solid rgba(239,233,216,0.15);
+  }
+  .t-item:first-child{border-top:none;}
+  .t-time{font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--gold-soft); padding-top:2px;}
+  .t-body h4{font-family:'Fraunces', serif; font-weight:600; font-size:17px; margin-bottom:5px;}
+  .t-body p{font-size:14px; color:#C6C1AE; max-width:480px;}
+
+  .duration-badge{
+    display:inline-flex; align-items:baseline; gap:10px;
+    background:rgba(185,138,61,0.12); border:1px solid rgba(185,138,61,0.4);
+    padding:14px 22px; border-radius:4px; margin-top:22px;
+  }
+  .duration-badge .num{font-family:'Fraunces', serif; font-size:36px; color:var(--gold-soft); font-weight:600;}
+  .duration-badge .lbl{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.06em; color:#C6C1AE; text-transform:uppercase;}
+
+  footer{
+    background:var(--bg-deep2); color:#8A9A8F;
+    padding:40px 64px 40px 96px;
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:.04em;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  @media(max-width:720px){ footer{padding:32px 24px 32px 60px;} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="spine">
+    <svg width="2" height="100%" style="position:absolute; left:0; top:0;">
+      <line x1="1" y1="0" x2="1" y2="100%" stroke="#B98A3D" stroke-opacity="0.35" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="eyebrow">Comunidade Terapêutica · Dependência Química</div>
+    <h1 class="title">Plano<br><em>Terapêutico</em></h1>
+    <p class="hero-sub">Um percurso de nove meses que une a sabedoria vivida dos Doze Passos ao saber técnico da Psicologia — cuidado individual, rotina estruturada e reconstrução de vínculos.</p>
+    <div class="hero-tags">
+      <span class="tag">12 PASSOS + TCC</span>
+      <span class="tag">EQUIPE MULTIDISCIPLINAR</span>
+      <span class="tag">DURAÇÃO · 9 MESES</span>
+      <span class="tag">MONITORIA 24H</span>
+    </div>
+  </div>
+
+  <!-- 01 FUNDAMENTOS -->
+  <section class="on-paper">
+    <div class="node"></div>
+    <div class="sec-head"><span class="sec-num">01</span><h2>Fundamentos</h2></div>
+    <p class="lede">A Comunidade Terapêutica agrega a filosofia dos Doze Passos do Alcoólicos Anônimos — vivida por profissionais de experiência, os Monitores — ao saber técnico especializado em dependência química.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Profissionais de experiência</h3>
+        <p>Monitores que vivenciaram a própria recuperação acompanham a convivência diária e servem de referência prática dos Doze Passos.</p>
+      </div>
+      <div class="card">
+        <h3>Saber técnico especializado</h3>
+        <p>Psicologia e Terapia Cognitivo-Comportamental somam-se à experiência vivida, com discussão de casos sob supervisão da Responsável Técnica.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 EQUIPE -->
+  <section class="on-paper2">
+    <div class="node"></div>
+    <div class="sec-head"><span class="sec-num">02</span><h2>Equipe &amp; Acompanhamento</h2></div>
+    <p class="lede">Cada paciente é acolhido e passa a contar com um psicólogo de referência durante todo o tratamento.</p>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Psicólogo de referência</h3>
+        <p>Acompanha o paciente do acolhimento ao fim do processo, mantendo contato com a família para trocas e feedbacks sempre que necessário.</p>
+      </div>
+      <div class="card">
+        <h3>Supervisão técnica</h3>
+        <p>Casos discutidos com a RT (Responsável Técnica) da unidade, garantindo consistência clínica ao longo do tratamento.</p>
+      </div>
+      <div class="card">
+        <h3>Psiquiatria &amp; sobreaviso</h3>
+        <p>Atendimento psiquiátrico mensal, com sobreaviso, monitoria e consultoria disponíveis 24 horas por dia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 METODOLOGIA -->
+  <section class="dark-strip">
+    <div class="node" style="border-color:var(--sage-light);"></div>
+    <div class="sec-head"><span class="sec-num">03</span><h2>Metodologia</h2></div>
+    <p class="lede">Trabalhamos com a metodologia dos Passos, agregando a Terapia Cognitivo-Comportamental. Os pacientes cuidam do próprio espaço e treinam a convivência entre pares — ensaio para uma mudança de estilo de vida efetiva.</p>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Convivência &amp; autonomia</h3>
+        <p>Cuidado do espaço próprio e prática diária de convivência em grupo, preparando o paciente para a vida após o tratamento.</p>
+      </div>
+      <div class="card">
+        <h3>Prevenção à recaída</h3>
+        <p>Foco constante em prevenção à recaída e manutenção da sobriedade como fio condutor do dia a dia.</p>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:26px; margin-bottom:6px;">Estratégias terapêuticas aplicadas em grupo e individualmente:</p>
+    <div class="pill-list">
+      <span class="pill">Modelo Transteórico de Mudança</span>
+      <span class="pill">Treino de Habilidades Sociais</span>
+      <span class="pill">Prevenção à Recaída</span>
+      <span class="pill">Regulação Emocional</span>
+      <span class="pill">Psicoeducação</span>
+      <span class="pill">Manejo de Contingências</span>
+      <span class="pill">Entrevista Motivacional</span>
+    </div>
+  </section>
+
+  <!-- 04 ROTINA -->
+  <section class="on-paper">
+    <div class="node"></div>
+    <div class="sec-head"><span class="sec-num">04</span><h2>Rotina Diária</h2></div>
+    <p class="lede">Um cronograma de atividades com horários ensina o paciente a lidar com seus compromissos — dentro e fora da casa.</p>
+    <div class="routine-row">
+      <span class="routine-tag">REFEIÇÕES</span>
+      <p>As 4 principais refeições diárias estão disponíveis a todos os pacientes.</p>
+    </div>
+    <div class="routine-row">
+      <span class="routine-tag">GULOSEIMAS</span>
+      <p>Itens trazidos pela família ou adquiridos na cantina são organizados em caixas identificadas e distribuídos diariamente pelo responsável pelo controle.</p>
+    </div>
+    <div class="routine-row">
+      <span class="routine-tag">CIGARROS</span>
+      <p>Para pacientes fumantes, o mesmo controle de distribuição diária se aplica.</p>
+    </div>
+    <div class="routine-row">
+      <span class="routine-tag">ATIVIDADES</span>
+      <p>Psicologia e Monitoria atuam em formato de grupo e individual, ao longo de todo o cronograma.</p>
+    </div>
+  </section>
+
+  <!-- 05 ESPIRITUALIDADE -->
+  <section class="on-paper2">
+    <div class="node"></div>
+    <div class="sec-head"><span class="sec-num">05</span><h2>Espiritualidade</h2></div>
+    <blockquote>Reconhecer-se como um ser no mundo, capaz e pertencente — exercício diário de compaixão e fé.</blockquote>
+  </section>
+
+  <!-- 06 DURAÇÃO E VISITAS -->
+  <section class="dark-strip">
+    <div class="node" style="border-color:var(--sage-light);"></div>
+    <div class="sec-head"><span class="sec-num">06</span><h2>Duração &amp; Visitas</h2></div>
+    <div class="duration-badge">
+      <span class="num">9</span>
+      <span class="lbl">meses de tratamento</span>
+    </div>
+    <div class="timeline">
+      <div class="t-item">
+        <span class="t-time">DIA 0</span>
+        <div class="t-body">
+          <h4>Início do tratamento</h4>
+          <p>Acolhimento do paciente e início do acompanhamento psicológico individual.</p>
+        </div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">DIA 45</span>
+        <div class="t-body">
+          <h4>Primeira visita</h4>
+          <p>Primeiro contato presencial da família, após os primeiros 45 dias de tratamento.</p>
+        </div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">QUINZENAL</span>
+        <div class="t-body">
+          <h4>Visitas seguintes</h4>
+          <p>Após o primeiro contato, as visitas passam a ocorrer quinzenalmente.</p>
+        </div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">CONTÍNUO</span>
+        <div class="t-body">
+          <h4>Grupo de WhatsApp da família</h4>
+          <p>Fotos do cotidiano dos pacientes e recados são compartilhados regularmente com a família.</p>
+        </div>
+      </div>
+      <div class="t-item">
+        <span class="t-time">SOB COMBINAÇÃO</span>
+        <div class="t-body">
+          <h4>Ressocializações em casa</h4>
+          <p>Combinadas em equipe, em conjunto com as respectivas famílias.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>PLANO TERAPÊUTICO</span>
+    <span>COMUNIDADE TERAPÊUTICA · PSICOLOGIA · TCC</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -144,7 +144,7 @@ img {
 }
 
 .topo-conteudo {
-    max-width: var(--largura);
+    max-width: 100%;
     margin: 0 auto;
     padding: 12px var(--espaco-lateral);
     display: flex;
